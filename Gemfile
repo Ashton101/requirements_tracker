@@ -18,6 +18,22 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+gem 'ancestry', '2.0.0'
+gem 'annotate', '~> 2.4.1.beta'
+gem 'protected_attributes'
+
+group :development do
+	gem 'rspec-rails'
+end
+
+group :test do 
+	gem 'capybara'
+end
+
+group :production do
+	gem 'pg' 
+end
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
