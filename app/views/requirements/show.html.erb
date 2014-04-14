@@ -1,0 +1,7 @@
+<h1>Requirements should be shown</h1>
+
+<%= nested_requirements @requirement.subtree.arrange(order: :created_at) %>
+
+
+
+<p> <%= link_to "Back to all requirements", "#" %></p>

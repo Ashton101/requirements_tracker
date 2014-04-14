@@ -1,7 +1,14 @@
 RequirementTracker::Application.routes.draw do
+
+  #resources :requirements
+
   get "projects/new"
   get "requirements/new"
+  get "requirements/show"
   get "users/new"
+  get "requirements/index"
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

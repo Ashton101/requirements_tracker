@@ -1,2 +1,20 @@
-<h1>Requirements#new</h1>
-<p>Find me in app/views/requirements/new.html.erb</p>
+<h1>New sub-requirement</h1>
+
+   <!--  <%= render @requirement.parent if @requirement.parent %> -->
+<h3>Place a small form here for entering a new requirement
+
+</h3>
+
+<%= form_for(:requirement) do |f| %> 
+		
+	<%= f.label :name, "Requirement name" %>
+	<%= f.text_field :name %> 
+
+	<%= f.label :description %>
+	<%= f.text_area :description %> 
+
+	<%= f.submit "Create Requirement", class: "btn btn-large btn-primary" %> 
+
+<% end %>
+
+
