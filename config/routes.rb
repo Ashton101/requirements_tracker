@@ -1,11 +1,14 @@
 RequirementTracker::Application.routes.draw do
 
+  devise_for :users
+  
   #resources :requirements
+root to: "users#home"
 
   get "projects/new"
   get "requirements/new"
   get "requirements/show"
-  get "users/new"
+  
   get "requirements/index"
 
 

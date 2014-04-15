@@ -1,11 +1,8 @@
 <h1>Index page</h1>
 <h3>Shows all root requirements (ancestry column = nil)</h3>
 
-<ul>
 
-	<% @requirement.each do |req| %>
-		<li> <%= nested_requirements(req.subtree.arrange(order: :created_at)) %> </li>
-	<% end %>
-
-</ul>
+<% @requirements.each do |requirement| %>	
+	<%= render partial: "requirement", object: requirement  %>
+<% end %>
 

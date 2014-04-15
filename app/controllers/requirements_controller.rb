@@ -5,7 +5,7 @@ class RequirementsController < ApplicationController
 
   def show
   	#will need to add a project_id here too
-  	@requirement = Requirement.find(5)
+  	@requirement = Requirement.find(1)
  
   end
 
@@ -22,7 +22,7 @@ class RequirementsController < ApplicationController
   end
 
   def index
-       @requirement = Requirement.all
+    @requirements = Requirement.where(ancestry: nil).all
   end
 
 end

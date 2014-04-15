@@ -1,0 +1,21 @@
+<h3> <%= @user.email %> </h3>
+
+<h3>Your projects are listed below</h3>
+
+	<button onclick="newProject()">New Project</button>
+
+	<script>
+	function newProject()
+	{
+		var proj=prompt("Please enter your new project name", "Project name");
+
+		if ((proj!=null) && (proj!="Project name"))
+		{
+		 //Project.create(name: proj, user_id: @user.id) 
+		}
+	}
+	</script>
+
+
+
+

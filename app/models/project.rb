@@ -9,5 +9,9 @@
 #
 
 class Project < ActiveRecord::Base
-	attr_accessible :name, :created_at
+	attr_accessible :name, :created_at, :user_id
+	
+	belongs_to :user
+	has_many :requirement
+
 end

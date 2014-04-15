@@ -11,3 +11,7 @@
  *= require_self
  *= require_tree .
  */
+
+.requirement {
+	margin-left: 10px;
+}

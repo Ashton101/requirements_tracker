@@ -21,6 +21,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'ancestry', '2.0.0'
 gem 'annotate', '~> 2.4.1.beta'
 gem 'protected_attributes'
+gem 'devise'
 
 group :development do
 	gem 'rspec-rails'

@@ -1,5 +1,6 @@
 <div class="requirement">
-
-	<%= requirement.name %> <strong> and it's id = </strong> <%= requirement.id %>
-	
+	<%= requirement.name %> <strong> and it's id = </strong> <%= requirement.id %> 
+	<% requirement.children.each do |child_requirement| %>
+		<%= render partial: "requirement", object: child_requirement  %>
+	<% end %>
 </div>
