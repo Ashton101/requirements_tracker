@@ -12,6 +12,6 @@ class Project < ActiveRecord::Base
 	attr_accessible :name, :created_at, :user_id
 	
 	belongs_to :user
-	has_many :requirement
+	has_many :requirements, foreign_key: :proj_id
 
 end

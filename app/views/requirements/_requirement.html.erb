@@ -1,6 +1,18 @@
 <div class="requirement">
-	<%= requirement.name %> <strong> and it's id = </strong> <%= requirement.id %> 
-	<% requirement.children.each do |child_requirement| %>
+
+	<div>
+		<%= requirement.name %> <strong> id: </strong> <%= requirement.id %> 
+	</div>
+
+	<div>
+		<%= link_to "Add subrequirement", new_project_requirement_path(parent_id: requirement)  %>
+
+	<%= link_to_if confirm: "Are you sure?","Delete", project_requirement_path(@project.id, requirement.id), method: :delete %>
+	</div>
+
+	<!-- <% requirement.children.each do |child_requirement| %>
 		<%= render partial: "requirement", object: child_requirement  %>
-	<% end %>
+	<% end %> -->
+
+
 </div>

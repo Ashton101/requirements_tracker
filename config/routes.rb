@@ -2,14 +2,26 @@ RequirementTracker::Application.routes.draw do
 
   devise_for :users
   
-  #resources :requirements
-root to: "users#home"
-
-  get "projects/new"
-  get "requirements/new"
-  get "requirements/show"
+#resources :requirements
+root to: "users#index"
   
-  get "requirements/index"
+  resources :users do
+    resources :projects 
+  end  
+   
+resources :projects do 
+  resources :requirements 
+end  
+
+
+
+  #resources :projects
+  
+  #get "projects/new"
+  #get "requirements/new"
+  #get "requirements/show"
+  
+  #get "requirements/index"
 
 
   # The priority is based upon order of creation: first created -> highest priority.

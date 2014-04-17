@@ -1,4 +1,11 @@
 <h1>Projects#new</h1>
 
+<%= form_for @project do |f| %> 
+		
+	<%= f.label :name, "Project name" %>
+	<%= f.text_field :name %> 
 
+	<%= f.submit "Create new project", class: "btn btn-large btn-primary" %> 
+
+<% end %>
 

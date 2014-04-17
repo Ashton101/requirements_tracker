@@ -1,0 +1,10 @@
+<h3> <%= current_user.email %> </h3>
+<h3>Projects list</h3>
+
+<ul id="projects">
+	<% @projects.each do |project| %>
+	  <li>  <%= link_to project.name, project_requirements_path(project.id) %> </li>
+  <% end %>
+</ul> 
+
+ <%= link_to "New Project", new_user_project_path(current_user.id) %>

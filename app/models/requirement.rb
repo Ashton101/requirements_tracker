@@ -12,7 +12,7 @@
 #
 class Requirement < ActiveRecord::Base
 	has_ancestry
-	belongs_to :project
+	belongs_to :project, foreign_key: :proj_id
 end
 
 

@@ -1,0 +1,9 @@
+<h1>Users list</h1>
+
+<%= link_to current_user.email, user_projects_path(current_user.id) %>
+
+<ul >
+	<% @user.each do |users| %>
+	  <li><%= users.email %></li>
+  <% end %>
+</ul> 

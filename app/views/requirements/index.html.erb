@@ -1,8 +1,7 @@
-<h1>Index page</h1>
-<h3>Shows all root requirements (ancestry column = nil)</h3>
+<h3>All root requirements (ancestry column = nil) </h3>
+<h3>Project code name: <%=@project.name%> </h3>
+<br />
 
+<%= nested_requirements @requirements.arrange(order: :created_at) %>
 
-<% @requirements.each do |requirement| %>	
-	<%= render partial: "requirement", object: requirement  %>
-<% end %>
-
+<%= render "form" %>
