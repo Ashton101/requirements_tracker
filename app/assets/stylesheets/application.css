@@ -15,3 +15,11 @@
 .requirement {
 	margin-left: 10px;
 }
+
+.nested_requirements{
+	margin-left: 50px;
+}
+
+.nested_requirements .nested_requirements .nested_requirements .nested_requirements .nested_requirements{
+	margin-left: 0px;
+}

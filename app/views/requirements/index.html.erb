@@ -1,5 +1,5 @@
-<h3>All root requirements (ancestry column = nil) </h3>
-<h3>Project code name: <%=@project.name%> </h3>
+<h3>All root requirements </h3>
+<h3>Project code name: <%= @project.name %> </h3>
 <br />
 
 <%= nested_requirements @requirements.arrange(order: :created_at) %>

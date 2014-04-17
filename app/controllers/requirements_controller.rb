@@ -1,4 +1,5 @@
 class RequirementsController < ApplicationController
+  
   def new
     @project = Project.find(params[:project_id])
     @requirement = @project.requirements.new(parent_id: params[:parent_id])
@@ -15,8 +16,8 @@ class RequirementsController < ApplicationController
    @project = Project.find(params[:project_id])
   	@requirement = @project.requirements.new(params[:requirement])
   	if @requirement.save
-  		#redirect_to project_requirements_path(@project.id)  #this works redirect to index path
-      redirect_to project_requirement_path(@project.id, @requirement.id) 
+  		#redirect_to project_requirements_path(@project.id)  #index path
+      redirect_to project_requirement_path(@project.id, @requirement.id) #show path
   	else
   		render :new
   	end
@@ -25,17 +26,14 @@ class RequirementsController < ApplicationController
   def destroy
     @project = Project.find(params[:project_id])
     @requirement = @project.requirements.find(params[:id])
-    @requirement.destroy #destroy all childre too?
-    redirect_to project_requirement_path
+    @requirement.destroy #destroy all children too? yes
+    redirect_to project_requirements_path
   end
 
   def index
     @project = Project.find(params[:project_id])
-    #@requirements = Requirement.scoped
     @requirements =@project.requirements.scoped 
     @requirement = Requirement.new
-    
-    #@project = Project.find(@requirements.first.proj_id) #might be shit code, do not ship?
   end
 
 end
