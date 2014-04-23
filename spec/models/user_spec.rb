@@ -1,5 +1,9 @@
 require 'spec_helper'
 
 describe User do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "Factory is set up correctly" do
+    it "creates a user using Factory Girl" do
+    	expect{ create(:user) }.to change{ User.count }.by(1)
+    end	
+  end
 end

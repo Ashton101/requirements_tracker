@@ -22,16 +22,19 @@ gem 'ancestry', '2.0.0'
 gem 'annotate', '~> 2.4.1.beta'
 gem 'protected_attributes'
 gem 'devise'
+gem 'json'
+gem 'simple_form'
 
 group :development do
-	gem 'rspec-rails'
 	gem 'pry'
 	gem "better_errors"
 	gem "binding_of_caller"
 end
 
-group :test do 
-	gem 'capybara'
+group :development, :test do
+  gem 'rspec-rails', '~> 2.14.2'
+  gem 'capybara'
+  gem 'factory_girl_rails'
 end
 
 group :production do

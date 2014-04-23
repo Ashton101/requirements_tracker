@@ -2,13 +2,20 @@
 
 	<div>
 		<%= requirement.name %> <strong> id: </strong> <%= requirement.id %> 
-		<%= requirement.description %>
+		<div> <%= requirement.description %> </div>
 	</div>
 
 	<div>
-		<%= button_to "Add sub-requirement", new_project_requirement_path(parent_id: requirement),method: :get %>
-		<%= button_to "Delete", project_requirement_path(project_id: @project.id,id: requirement.id), 
+		Minimum: <%= requirement.minimum %>
+		Most likely: <%= requirement.most_likely %>
+		Maximum: <%= requirement.maximum %>
+	</div>
+
+	<div>
+		<%= button_to "Edit", edit_requirement_path(id: requirement.id),method: :get %>
+		<%= button_to "Delete", requirement_path(id: requirement.id) , 
 		data: {confirm: "Are you sure?"}, method: :delete %>
+		<%= link_to "Add sub-requirement", new_child_requirement_path(id: requirement.id) %>
 	</div>
 
 </div>

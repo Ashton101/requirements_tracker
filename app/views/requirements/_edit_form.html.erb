@@ -1,9 +1,9 @@
-<%= simple_form_for [@project, @requirement] do |f| %> 
- 
+<%= simple_form_for(@requirement, :url => requirement_path, :method => :put) do |f| %> 
+
 	<%= f.input :parent_id, as: :hidden %>	
 
-	<%= f.label :name %>
-			<%= f.text_field :name %> 
+			<%= f.label :name %>
+			<%= f.text_field :name  %> 
 
 			<%= f.label :description %>
 			<%= f.text_area :description %> 
@@ -17,9 +17,7 @@
 			<%= f.label :maximum %>
 			<%= f.input_field :maximum, collection: 1..20 %>
 
-
-
-		<%= f.submit "Create Requirement"%> 
+		<%= f.submit "Update Requirement"%> 
 	
 
 <% end %>

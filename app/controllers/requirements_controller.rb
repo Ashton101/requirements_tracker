@@ -1,39 +1,83 @@
 class RequirementsController < ApplicationController
+  before_filter :find_project, only: [:new, :create, :index]
+  before_filter :find_requirement, except: [:new, :create, :index, :new_child]
   
   def new
-    @project = Project.find(params[:project_id])
-    @requirement = @project.requirements.new(parent_id: params[:parent_id])
-      #@requirement = Requirement.new(parent_id: params[:parent_id][:proj_id])
+    @requirement = @project.requirements.new() 
   end
 
+  def new_child
+    @requirement = Requirement.new(parent_id: params[:id])
+  end  
+
   def show
-  	@project = Project.find(params[:project_id])
-  	@requirement = @project.requirements.find(params[:id])
-    
+  	@requirement
   end
 
   def create
-   @project = Project.find(params[:project_id])
   	@requirement = @project.requirements.new(params[:requirement])
   	if @requirement.save
-  		#redirect_to project_requirements_path(@project.id)  #index path
-      redirect_to project_requirement_path(@project.id, @requirement.id) #show path
+      @requirement.update_range_parents(@requirement,@requirement.minimum,
+                           @requirement.most_likely,
+                           @requirement.maximum)
+  	
+      redirect_to project_requirements_path(@project.id) #index path
   	else
   		render :new
   	end
   end
 
+  def children #create children
+    #@requirement = @requirement.requirements.new(params[:requirement])
+    #@requirement = Requirement.new(params[:requirement],proj_id: @requirement.proj_id)
+    @project = Project.find(@requirement.proj_id)
+     @requirement = @project.requirements.new(params[:requirement])
+    if @requirement.save
+
+      @requirement.add_range_parents(@requirement,@requirement.minimum,
+                           @requirement.most_likely,
+                           @requirement.maximum)
+      redirect_to project_requirements_path(@requirement.proj_id) #index path
+    else
+      render :new_child
+    end    
+  end 
+
+  def edit
+   # @requirement
+  end
+
+  def update
+    old_requirement = @requirement.clone
+    
+    @requirement.update!(params[:requirement])
+
+    @requirement.update_tree_range_after_edit(old_requirement,@requirement)
+
+    redirect_to project_requirements_path(@requirement.proj_id)
+  end
+
   def destroy
-    @project = Project.find(params[:project_id])
-    @requirement = @project.requirements.find(params[:id])
+    @requirement.add_range_parents(@requirement,-(@requirement.minimum),
+                           -(@requirement.most_likely),
+                           -(@requirement.maximum))
     @requirement.destroy #destroy all children too? yes
-    redirect_to project_requirements_path
+    redirect_to project_requirements_path(@requirement.project)
   end
 
   def index
-    @project = Project.find(params[:project_id])
     @requirements =@project.requirements.scoped 
-    @requirement = Requirement.new
+    @requirement = @project.requirements.new
   end
+
+private
+
+  def find_project
+    @project = current_user.projects.find(params[:project_id])
+  end
+
+  def find_requirement
+    @requirement = current_user.requirements.find(params[:id])
+  end   
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140415125400) do
+ActiveRecord::Schema.define(version: 20140422120628) do
 
   create_table "projects", force: true do |t|
     t.string   "name"
@@ -27,6 +27,9 @@ ActiveRecord::Schema.define(version: 20140415125400) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "ancestry"
+    t.integer  "minimum"
+    t.integer  "most_likely"
+    t.integer  "maximum"
   end
 
   create_table "users", force: true do |t|

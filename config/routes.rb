@@ -6,11 +6,17 @@ RequirementTracker::Application.routes.draw do
 root to: "users#index"
   
   resources :users do
-    resources :projects 
+    resources :projects do
+    end
   end  
    
 resources :projects do 
-  resources :requirements 
+  resources :requirements, only: [:index, :new, :create] 
+end  
+
+resources :requirements, only: [:edit, :update, :destroy] do
+  get 'new_child', on: :member
+  post 'children', on: :member
 end  
 
 

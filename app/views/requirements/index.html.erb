@@ -2,6 +2,7 @@
 <h3>Project code name: <%= @project.name %> </h3>
 <br />
 
-<%= nested_requirements @requirements.arrange(order: :created_at) %>
+ 
+ <%= nested_requirements @requirements.arrange(order: :created_at) %> 
 
-<%= render "form" %>
+<%= render "form" %> 
