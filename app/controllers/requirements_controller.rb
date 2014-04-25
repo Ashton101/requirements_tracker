@@ -17,9 +17,9 @@ class RequirementsController < ApplicationController
   def create
   	@requirement = @project.requirements.new(params[:requirement])
   	if @requirement.save
-      @requirement.update_range_parents(@requirement,@requirement.minimum,
-                           @requirement.most_likely,
-                           @requirement.maximum)
+      @requirement.add_range_parents(@requirement,@requirement.minimum,  #
+                           @requirement.most_likely,                        # I think this code is redundant !?? inspect
+                           @requirement.maximum)                            #
   	
       redirect_to project_requirements_path(@project.id) #index path
   	else
@@ -44,17 +44,17 @@ class RequirementsController < ApplicationController
   end 
 
   def edit
-   # @requirement
   end
 
   def update
-    old_requirement = @requirement.clone
-    
-    @requirement.update!(params[:requirement])
+    old_requirement = Marshal.load( Marshal.dump(@requirement) )   #this will deep copy the @requirement object 
 
-    @requirement.update_tree_range_after_edit(old_requirement,@requirement)
-
-    redirect_to project_requirements_path(@requirement.proj_id)
+    if @requirement.update_attributes(params[:requirement])
+      @requirement.update_tree_range_after_edit(old_requirement,@requirement)
+      redirect_to project_requirements_path(@requirement.proj_id)
+    else
+      render :edit
+    end
   end
 
   def destroy
@@ -70,14 +70,14 @@ class RequirementsController < ApplicationController
     @requirement = @project.requirements.new
   end
 
-private
+  private
 
-  def find_project
-    @project = current_user.projects.find(params[:project_id])
-  end
+    def find_project
+      @project = current_user.projects.find(params[:project_id])
+    end
 
-  def find_requirement
-    @requirement = current_user.requirements.find(params[:id])
-  end   
+    def find_requirement
+      @requirement = current_user.requirements.find(params[:id])
+    end   
 
 end

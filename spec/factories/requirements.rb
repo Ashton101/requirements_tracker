@@ -8,6 +8,7 @@ FactoryGirl.define do
 	  
 	  factory :child_requirement do
 	  	name 'this is a child requirment'
+	  	proj_id 1
 	  	association :parent_id, factory: :parent_requirement
 	  end
 

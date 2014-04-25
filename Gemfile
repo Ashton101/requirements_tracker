@@ -26,15 +26,17 @@ gem 'json'
 gem 'simple_form'
 
 group :development do
-	gem 'pry'
+
 	gem "better_errors"
 	gem "binding_of_caller"
 end
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.2'
+  gem 'pry'
   gem 'capybara'
   gem 'factory_girl_rails'
+  gem 'database_cleaner'
 end
 
 group :production do
