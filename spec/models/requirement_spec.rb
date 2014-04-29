@@ -47,15 +47,13 @@ describe Requirement do
       parent_requirement = FactoryGirl.create(:parent_requirement, minimum: 1, maximum: 1, most_likely: 1)
       child_requirement1 = FactoryGirl.create(:child_requirement, parent_id: parent_requirement.id, minimum: 2, maximum: 1, most_likely: 1)
 
-      child_requirement1.add_range_parents(child_requirement1,child_requirement1.minimum,
-                           child_requirement1.most_likely,
-                           child_requirement1.maximum)
+      child_requirement1.add_range_to_parents
 
       old_requirement = Marshal.load( Marshal.dump(child_requirement1) ) 
 
       child_requirement1.update_attributes(minimum: 3)
 
-      child_requirement1.update_tree_range_after_edit(old_requirement,child_requirement1)
+      child_requirement1.update_tree_range_after_edit(old_requirement)
 
       expect(child_requirement1.parent.minimum).to eq(4)
     end
@@ -64,15 +62,11 @@ describe Requirement do
     	parent_requirement1 = FactoryGirl.create(:parent_requirement, minimum: 1, maximum: 1, most_likely: 1)
       child_requirement11 = FactoryGirl.create(:child_requirement, parent_id: parent_requirement1.id, minimum: 2, maximum: 1, most_likely: 1)	
 
-      child_requirement11.add_range_parents(child_requirement11,child_requirement11.minimum,
-                           child_requirement11.most_likely,
-                           child_requirement11.maximum)
+      child_requirement11.add_range_to_parents
 
       child_requirement2 = FactoryGirl.create(:child_requirement, parent_id: child_requirement11.id, minimum: 3, maximum: 1, most_likely: 1)	
 
-      child_requirement2.add_range_parents(child_requirement2,child_requirement2.minimum,
-                           child_requirement2.most_likely,
-                           child_requirement2.maximum)
+      child_requirement2.add_range_to_parents
      
       expect(parent_requirement1.reload.minimum).to eq(6)
     end	
@@ -87,7 +81,7 @@ describe Requirement do
 
       parent_requirement3.update_attributes(minimum: 3)
 
-      parent_requirement3.update_tree_range_after_edit(old_requirement2,parent_requirement3)
+      parent_requirement3.update_tree_range_after_edit(old_requirement2)
 
       expect(child_requirement3.reload.minimum).to eq(0)
 
@@ -99,16 +93,13 @@ describe Requirement do
       parent_requirement4 = FactoryGirl.create(:parent_requirement, minimum: 1, maximum: 1, most_likely: 1)
       child_requirement41 = FactoryGirl.create(:child_requirement, parent_id: parent_requirement4.id, minimum: 2, maximum: 1, most_likely: 1) 
 
-      child_requirement41.add_range_parents(child_requirement41,child_requirement41.minimum,
-                           child_requirement41.most_likely,
-                           child_requirement41.maximum)
+      child_requirement41.add_range_to_parents
 
       child_requirement42 = FactoryGirl.create(:child_requirement, parent_id: child_requirement41.id, minimum: 2, maximum: 1, most_likely: 1)
 
-      child_requirement42.add_range_parents(child_requirement42,child_requirement42.minimum,
-                           child_requirement42.most_likely,
-                           child_requirement42.maximum)
+      child_requirement42.add_range_to_parents
       
+     parent_requirement4.update_tree_range_before_delete
       parent_requirement4.destroy
 
 
@@ -119,19 +110,14 @@ describe Requirement do
       parent_requirement5 = FactoryGirl.create(:parent_requirement, minimum: 1, maximum: 1, most_likely: 1)
       child_requirement51 = FactoryGirl.create(:child_requirement, parent_id: parent_requirement5.id, minimum: 2, maximum: 1, most_likely: 1) 
 
-      child_requirement51.add_range_parents(child_requirement51,child_requirement51.minimum,
-                           child_requirement51.most_likely,
-                           child_requirement51.maximum)
+      child_requirement51.add_range_to_parents
 
       child_requirement52 = FactoryGirl.create(:child_requirement, parent_id: child_requirement51.id, minimum: 2, maximum: 1, most_likely: 1)
 
-      child_requirement52.add_range_parents(child_requirement52,child_requirement52.minimum,
-                           child_requirement52.most_likely,
-                           child_requirement52.maximum)
+      child_requirement52.add_range_to_parents
 
-      child_requirement52.add_range_parents(child_requirement52,-(child_requirement52.minimum),
-                           -(child_requirement52.most_likely),
-                           -(child_requirement52.maximum))
+      child_requirement52.update_tree_range_before_delete
+
       child_requirement52.destroy
 
       expect(parent_requirement5.reload.minimum).to eq(3)

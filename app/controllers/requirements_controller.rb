@@ -17,10 +17,6 @@ class RequirementsController < ApplicationController
   def create
   	@requirement = @project.requirements.new(params[:requirement])
   	if @requirement.save
-      @requirement.add_range_parents(@requirement,@requirement.minimum,  #
-                           @requirement.most_likely,                        # I think this code is redundant !?? inspect
-                           @requirement.maximum)                            #
-  	
       redirect_to project_requirements_path(@project.id) #index path
   	else
   		render :new
@@ -28,15 +24,10 @@ class RequirementsController < ApplicationController
   end
 
   def children #create children
-    #@requirement = @requirement.requirements.new(params[:requirement])
-    #@requirement = Requirement.new(params[:requirement],proj_id: @requirement.proj_id)
     @project = Project.find(@requirement.proj_id)
-     @requirement = @project.requirements.new(params[:requirement])
+    @requirement = @project.requirements.new(params[:requirement])
     if @requirement.save
-
-      @requirement.add_range_parents(@requirement,@requirement.minimum,
-                           @requirement.most_likely,
-                           @requirement.maximum)
+      @requirement.add_range_to_parents
       redirect_to project_requirements_path(@requirement.proj_id) #index path
     else
       render :new_child
@@ -47,10 +38,9 @@ class RequirementsController < ApplicationController
   end
 
   def update
-    old_requirement = Marshal.load( Marshal.dump(@requirement) )   #this will deep copy the @requirement object 
-
+    old_requirement = Marshal.load( Marshal.dump(@requirement) ) 
     if @requirement.update_attributes(params[:requirement])
-      @requirement.update_tree_range_after_edit(old_requirement,@requirement)
+      @requirement.update_tree_range_after_edit(old_requirement)
       redirect_to project_requirements_path(@requirement.proj_id)
     else
       render :edit
@@ -58,9 +48,7 @@ class RequirementsController < ApplicationController
   end
 
   def destroy
-    @requirement.add_range_parents(@requirement,-(@requirement.minimum),
-                           -(@requirement.most_likely),
-                           -(@requirement.maximum))
+    @requirement.update_tree_range_before_delete
     @requirement.destroy #destroy all children too? yes
     redirect_to project_requirements_path(@requirement.project)
   end
