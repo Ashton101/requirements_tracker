@@ -9,13 +9,14 @@
 		<strong>Minimum: </strong> <%= requirement.minimum %>
 		<strong>Most likely: </strong> <%= requirement.most_likely %>
 		<strong>Maximum: </strong> <%= requirement.maximum %>
-	</div>
+	</div>  
 
-	<div>
-		<%= button_to "Edit", edit_requirement_path(id: requirement.id),method: :get %>
+	<div class="buttons">
+		<%= link_to "<button>Add sub-requirement</button>".html_safe, new_child_requirement_path(id: requirement.id) %>
+		<%= button_to "Edit", edit_requirement_path(id: requirement.id),method: :get if requirement.is_childless? %>
 		<%= button_to "Delete", requirement_path(id: requirement.id) , 
 		data: {confirm: "Are you sure?"}, method: :delete %>
-		<%= link_to "<button>Add sub-requirement</button>".html_safe, new_child_requirement_path(id: requirement.id) %>
+		
 	</div>
 
 </div>

@@ -23,3 +23,8 @@
 .nested_requirements .nested_requirements .nested_requirements .nested_requirements .nested_requirements{
 	margin-left: 0px;
 }
+
+.buttons form, .buttons a {
+  display: inline-block;
+
+}

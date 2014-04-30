@@ -27,7 +27,8 @@ class RequirementsController < ApplicationController
     @project = Project.find(@requirement.proj_id)
     @requirement = @project.requirements.new(params[:requirement])
     if @requirement.save
-      @requirement.add_range_to_parents
+     # @requirement.add_range_to_parents
+        @requirement.update_ranges
       redirect_to project_requirements_path(@requirement.proj_id) #index path
     else
       render :new_child
@@ -40,17 +41,24 @@ class RequirementsController < ApplicationController
   def update
     old_requirement = Marshal.load( Marshal.dump(@requirement) ) 
     if @requirement.update_attributes(params[:requirement])
-      @requirement.update_tree_range_after_edit(old_requirement)
+     # @requirement.update_tree_range_after_edit(old_requirement)
+      @requirement.update_ranges
       redirect_to project_requirements_path(@requirement.proj_id)
+    
     else
       render :edit
     end
   end
 
   def destroy
-    @requirement.update_tree_range_before_delete
-    @requirement.destroy #destroy all children too? yes
-    redirect_to project_requirements_path(@requirement.project)
+   # @requirement.update_tree_range_before_delete
+    if @requirement.destroy #destroy all children too? yes
+      @requirement.update_ranges
+      redirect_to project_requirements_path(@requirement.project)
+    
+    else
+      redirect_to project_requirements_path(@requirement.project)
+    end
   end
 
   def index
